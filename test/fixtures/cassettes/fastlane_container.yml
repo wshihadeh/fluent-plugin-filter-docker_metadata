@@ -1,0 +1,38 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://unix/v1.16/containers/2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e/json
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Swipely/Docker-API 1.34.2
+      Content-Type:
+      - text/plain
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Api-Version:
+      - '1.37'
+      Content-Type:
+      - application/json
+      Date:
+      - Wed, 25 Jul 2018 21:50:05 GMT
+      Docker-Experimental:
+      - 'true'
+      Ostype:
+      - linux
+      Server:
+      - Docker/18.05.0-ce (linux)
+    body:
+      encoding: ASCII-8BIT
+      string: '{"Id":"2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e","Created":"2018-07-25T07:10:01.3573239Z","Path":"npm","Args":["run","start:prod"],"State":{"Status":"running","Running":true,"Paused":false,"Restarting":false,"OOMKilled":false,"Dead":false,"Pid":9405,"ExitCode":0,"Error":"","StartedAt":"2018-07-25T07:11:07.3881524Z","FinishedAt":"0001-01-01T00:00:00Z"},"Image":"sha256:eab04071e2f0fdf80a6c4b8d88de1cf9424818a6a1eec304ba8082c162fff557","ResolvConfPath":"/var/lib/docker/containers/2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e/resolv.conf","HostnamePath":"/var/lib/docker/containers/2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e/hostname","HostsPath":"/var/lib/docker/containers/2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e/hosts","LogPath":"/var/lib/docker/containers/2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e/2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e-json.log","Name":"/fastlane_community_frontend_web.1.k6j8nk6qbaeo7609gz31axszw","RestartCount":0,"Driver":"overlay2","Platform":"linux","MountLabel":"","ProcessLabel":"","AppArmorProfile":"","ExecIDs":null,"HostConfig":{"Binds":null,"ContainerIDFile":"","LogConfig":{"Type":"json-file","Config":{}},"NetworkMode":"default","PortBindings":{},"RestartPolicy":{"Name":"","MaximumRetryCount":0},"AutoRemove":false,"VolumeDriver":"","VolumesFrom":null,"CapAdd":null,"CapDrop":null,"Dns":null,"DnsOptions":null,"DnsSearch":null,"ExtraHosts":null,"GroupAdd":null,"IpcMode":"shareable","Cgroup":"","Links":null,"OomScoreAdj":0,"PidMode":"","Privileged":false,"PublishAllPorts":false,"ReadonlyRootfs":false,"SecurityOpt":null,"UTSMode":"","UsernsMode":"","ShmSize":67108864,"Runtime":"runc","ConsoleSize":[0,0],"Isolation":"default","CpuShares":0,"Memory":0,"NanoCpus":0,"CgroupParent":"","BlkioWeight":0,"BlkioWeightDevice":null,"BlkioDeviceReadBps":null,"BlkioDeviceWriteBps":null,"BlkioDeviceReadIOps":null,"BlkioDeviceWriteIOps":null,"CpuPeriod":0,"CpuQuota":0,"CpuRealtimePeriod":0,"CpuRealtimeRuntime":0,"CpusetCpus":"","CpusetMems":"","Devices":null,"DeviceCgroupRules":null,"DiskQuota":0,"KernelMemory":0,"MemoryReservation":0,"MemorySwap":0,"MemorySwappiness":null,"OomKillDisable":false,"PidsLimit":0,"Ulimits":null,"CpuCount":0,"CpuPercent":0,"IOMaximumIOps":0,"IOMaximumBandwidth":0},"GraphDriver":{"Data":{"LowerDir":"/var/lib/docker/overlay2/80ce07cf5a66a4658d4853ac37c55303d5038d25a473c16f28949742ed6fc3c4-init/diff:/var/lib/docker/overlay2/858906afa04625e44cc545969941536fbb9c37b0ffe26cb62b3d94742b03db26/diff:/var/lib/docker/overlay2/3a2ed4651b3658fd829f518b7a0f0c51babbc43db5c420872ead3bffc984edec/diff:/var/lib/docker/overlay2/7f1631684e40ce6af4d58b9f7bb13fa93d9df72ea8c1297c06318083be844f15/diff:/var/lib/docker/overlay2/e20b0e6d46b2b7f2f4f6fc6bf6e344bb8dc58245e0e3024e01a1fe788c9cf981/diff:/var/lib/docker/overlay2/f1423f678c45dc7e0b5e4af7051d185fa5873910ab8d64ed2a6af1c7d1e239b0/diff:/var/lib/docker/overlay2/3fdda272f08929d67086ed71e51fc8533cfb64ee9ff611cdf60e28180c4537e9/diff:/var/lib/docker/overlay2/3f77d29eae3227f4238d2542236041e7e77d445b31db1c6cb419aff726b2c425/diff:/var/lib/docker/overlay2/e0c968f82f8f610b044556a099a905e12aeb65f56ca71658e0fd8fef35a23479/diff:/var/lib/docker/overlay2/59fb21a48b065e0ac4a4497a58d2d3f8a9d010f015367a836c49c4916498d31b/diff:/var/lib/docker/overlay2/8f09a4ebe4866d254f01109b706db14bfcea1acc2699d90329da13ec1276c939/diff:/var/lib/docker/overlay2/4290331ca8ad1c9bc7dbfd7b58675fa791ff2466df7c73dc78ea3abd7dc1e84e/diff:/var/lib/docker/overlay2/a88ed8308a89ef0273d1e15ffb6e97b0aaf29e28eee825241cd8db8451f3c0bd/diff:/var/lib/docker/overlay2/ab5ee27d730c67a86d738ea409b2c984d217736f8c232d267580b6e25e57913f/diff:/var/lib/docker/overlay2/53b8023f22b843940f531c81bb4bbefb4618ef38145a88fdcf1a3c2133338f18/diff:/var/lib/docker/overlay2/03b3bb65b683ecaed96c01059affc914d5e1f478a19c18f359fb2599c564bf24/diff:/var/lib/docker/overlay2/752e20187c9b530f6f53c6d60d32868c4c555a5ec43dec4972b390bdcb2537a1/diff:/var/lib/docker/overlay2/f18d27528d976b7c1ea3e82ac6013b10acf682c263358ada8063518952b909ff/diff","MergedDir":"/var/lib/docker/overlay2/80ce07cf5a66a4658d4853ac37c55303d5038d25a473c16f28949742ed6fc3c4/merged","UpperDir":"/var/lib/docker/overlay2/80ce07cf5a66a4658d4853ac37c55303d5038d25a473c16f28949742ed6fc3c4/diff","WorkDir":"/var/lib/docker/overlay2/80ce07cf5a66a4658d4853ac37c55303d5038d25a473c16f28949742ed6fc3c4/work"},"Name":"overlay2"},"Volumes":{},"VolumesRW":{},"Config":{"Hostname":"2dc9528d182c","Domainname":"","User":"deploy","AttachStdin":false,"AttachStdout":false,"AttachStderr":false,"Tty":false,"OpenStdin":false,"StdinOnce":false,"Env":["ACTIVE_THEME=default","API_URL=http://community_backend_web:8080/api","BLOCK_SEARCH_ENGINES=false","FACEBOOK_APP_ID=1840593256262279","FRONTEND_URL=http://community_frontend_web:8080","HOST=0.0.0.0","HTTP_BASIC_AUTH_ENABLED=false","LINKEDIN_CLIENT_ID=77mafgvnzwzor1","LOCALE=en-GB","NODE_ENV=production","PORT=8080","PRIVATE_COMMUNITY=false","PROXY_LOGLEVEL=debug","PUBLIC_API_URL=https://community.fastlane.docker/api","PUBLIC_FRONTEND_URL=https://community.fastlane.docker","REFRESH_TTL=28800","SSO_COOKIE_DOMAIN=fastlane.docker","TEST_PORT=8001","PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin","NODE_VERSION=9.9.0","YARN_VERSION=1.5.1","HOME=/home/deploy"],"Cmd":["npm","run","start:prod"],"Image":"docker-prod.me/fastlane/auth_service:latest","Volumes":null,"WorkingDir":"/home/deploy/app","Entrypoint":null,"OnBuild":null,"Labels":{"com.docker.stack.namespace":"fastlane","com.docker.swarm.node.id":"l00mvrbj0mw1ivtsk8iiu76no","com.docker.swarm.service.id":"5nkbd9f8oqoumdry4e0nqj33k","com.docker.swarm.service.name":"fastlane_community_frontend_web","com.docker.swarm.task":"","com.docker.swarm.task.id":"k6j8nk6qbaeo7609gz31axszw","com.docker.swarm.task.name":"fastlane_community_frontend_web.1.k6j8nk6qbaeo7609gz31axszw","com.fidor.revision":"22bab9158b6d2106a8fe8c26e3ebf5df3cd56bc6"},"MacAddress":"","NetworkDisabled":false,"ExposedPorts":null,"VolumeDriver":"","Memory":0,"MemorySwap":0,"CpuShares":0,"Cpuset":""},"NetworkSettings":{"Bridge":"","SandboxID":"993a54e7ffba3833837dbf9b8ffd64338ec2ffbfefcf97c8b73ee53099ae2b37","HairpinMode":false,"LinkLocalIPv6Address":"","LinkLocalIPv6PrefixLen":0,"Ports":{},"SandboxKey":"/var/run/docker/netns/993a54e7ffba","SecondaryIPAddresses":null,"SecondaryIPv6Addresses":null,"EndpointID":"","Gateway":"","GlobalIPv6Address":"","GlobalIPv6PrefixLen":0,"IPAddress":"","IPPrefixLen":0,"IPv6Gateway":"","MacAddress":""}}
+
+'
+    http_version:
+  recorded_at: Wed, 25 Jul 2018 21:50:05 GMT
+recorded_with: VCR 4.0.0
