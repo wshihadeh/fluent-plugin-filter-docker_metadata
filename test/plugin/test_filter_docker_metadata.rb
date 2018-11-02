@@ -6,6 +6,7 @@ WebMock.disable_net_connect!
 
 class DockerMetadataFilterTest < Test::Unit::TestCase
   include Fluent
+  include Fluent::Test::Helpers
 
   setup do
     Fluent::Test.setup
@@ -13,7 +14,7 @@ class DockerMetadataFilterTest < Test::Unit::TestCase
   end
 
   def create_driver(conf = '')
-    Test::FilterTestDriver.new(DockerMetadataFilter).configure(conf, true)
+    Test::Driver::Filter.new(Plugin::DockerMetadataFilter).configure(conf)
   end
 
   sub_test_case 'configure' do
@@ -78,22 +79,23 @@ class DockerMetadataFilterTest < Test::Unit::TestCase
 
     def emit(config, msgs, tag='2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e')
       d = create_driver(config)
-      d.run {
+      d.run(default_tag: tag) {
         msgs.each { |msg|
-          d.emit_with_tag(tag, {'foo' => 'bar', 'message' => msg}, @time)
+          d.feed(@time, {'foo' => 'bar', 'message' => msg})
         }
-      }.filtered
+      }
+      d.filtered.map{|e| e.last}
     end
 
     test 'docker metadata with default configs' do
       VCR.use_cassette('fastlane_container') do
-        es = emit('', messages)
-        assert_equal(4, es.instance_variable_get(:@record_array).size)
-        assert_equal('2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e', es.instance_variable_get(:@record_array)[0]['container_id'])
-        assert_equal('fastlane_community_frontend_web.1.k6j8nk6qbaeo7609gz31axszw', es.instance_variable_get(:@record_array)[0]['container_name'])
-        assert_equal('2dc9528d182c', es.instance_variable_get(:@record_array)[0]['container_hostname'])
-        assert_nil(es.instance_variable_get(:@record_array)[0]['image_id'])
-        assert_nil(es.instance_variable_get(:@record_array)[0]['container_image'])
+        filtered = emit('', messages)
+        assert_equal(4, filtered.size)
+        assert_equal('2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e', filtered[0]['container_id'])
+        assert_equal('fastlane_community_frontend_web.1.k6j8nk6qbaeo7609gz31axszw', filtered[0]['container_name'])
+        assert_equal('2dc9528d182c', filtered[0]['container_hostname'])
+        assert_nil(filtered[0]['image_id'])
+        assert_nil(filtered[0]['container_image'])
       end
     end
 
@@ -103,13 +105,13 @@ class DockerMetadataFilterTest < Test::Unit::TestCase
           image_id true
           image_name true
         ]
-        es = emit(config, messages)
-        assert_equal(4, es.instance_variable_get(:@record_array).size)
-        assert_equal('2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e', es.instance_variable_get(:@record_array)[0]['container_id'])
-        assert_equal('fastlane_community_frontend_web.1.k6j8nk6qbaeo7609gz31axszw', es.instance_variable_get(:@record_array)[0]['container_name'])
-        assert_equal('2dc9528d182c', es.instance_variable_get(:@record_array)[0]['container_hostname'])
-        assert_equal('sha256:eab04071e2f0fdf80a6c4b8d88de1cf9424818a6a1eec304ba8082c162fff557', es.instance_variable_get(:@record_array)[0]['image_id'])
-        assert_equal('docker-prod.me/fastlane/auth_service:latest', es.instance_variable_get(:@record_array)[0]['container_image'])
+        filtered = emit(config, messages)
+        assert_equal(4, filtered.size)
+        assert_equal('2dc9528d182cef01f03ccb69bc0d51c2d44ee7c8655d165d5f15507de766bb5e', filtered[0]['container_id'])
+        assert_equal('fastlane_community_frontend_web.1.k6j8nk6qbaeo7609gz31axszw', filtered[0]['container_name'])
+        assert_equal('2dc9528d182c', filtered[0]['container_hostname'])
+        assert_equal('sha256:eab04071e2f0fdf80a6c4b8d88de1cf9424818a6a1eec304ba8082c162fff557', filtered[0]['image_id'])
+        assert_equal('docker-prod.me/fastlane/auth_service:latest', filtered[0]['container_image'])
       end
     end
 
@@ -118,11 +120,11 @@ class DockerMetadataFilterTest < Test::Unit::TestCase
         config =  %[
           labels com.docker.stack.namespace:namespace,com.docker.swarm.service.id:service_id,com.docker.swarm.service.name:service_image
         ]
-        es = emit(config, messages)
-        assert_equal(4, es.instance_variable_get(:@record_array).size)
-        assert_equal('fastlane', es.instance_variable_get(:@record_array)[0]['namespace'])
-        assert_equal('fastlane_community_frontend_web', es.instance_variable_get(:@record_array)[0]['service_image'])
-        assert_equal('5nkbd9f8oqoumdry4e0nqj33k', es.instance_variable_get(:@record_array)[0]['service_id'])
+        filtered = emit(config, messages)
+        assert_equal(4, filtered.size)
+        assert_equal('fastlane', filtered[0]['namespace'])
+        assert_equal('fastlane_community_frontend_web', filtered[0]['service_image'])
+        assert_equal('5nkbd9f8oqoumdry4e0nqj33k', filtered[0]['service_id'])
       end
     end
 
@@ -132,21 +134,21 @@ class DockerMetadataFilterTest < Test::Unit::TestCase
         config =  %[
           labels com.docker.stack.namespace:namespace,com.swarm.service.none:undefined
         ]
-        es = emit(config, messages)
-        assert_equal(4, es.instance_variable_get(:@record_array).size)
-        assert_equal('fastlane', es.instance_variable_get(:@record_array)[0]['namespace'])
-        assert_nil(es.instance_variable_get(:@record_array)[0]['undefined'])
-        assert_nil(es.instance_variable_get(:@record_array)[0]['unconfigerd'])
+        filtered = emit(config, messages)
+        assert_equal(4, filtered.size)
+        assert_equal('fastlane', filtered[0]['namespace'])
+        assert_nil(filtered[0]['undefined'])
+        assert_nil(filtered[0]['unconfigerd'])
       end
     end
 
     test 'nonexistent docker metadata' do
       VCR.use_cassette('invalid') do
-        es = emit('', messages, '0001119991111111111111111100011111111111111111111111111111111111')
-        assert_equal(4, es.instance_variable_get(:@record_array).size)
-        assert_nil(es.instance_variable_get(:@record_array)[0]['container_id'])
-        assert_nil(es.instance_variable_get(:@record_array)[0]['container_name'])
-        assert_nil(es.instance_variable_get(:@record_array)[0]['container_hostname'])
+        filtered = emit('', messages, '0001119991111111111111111100011111111111111111111111111111111111')
+        assert_equal(4, filtered.size)
+        assert_nil(filtered[0]['container_id'])
+        assert_nil(filtered[0]['container_name'])
+        assert_nil(filtered[0]['container_hostname'])
       end
     end
   end

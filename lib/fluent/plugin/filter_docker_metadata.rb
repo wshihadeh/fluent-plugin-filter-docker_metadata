@@ -1,5 +1,7 @@
-module Fluent
-  class DockerMetadataFilter < Fluent::Filter
+require 'fluent/plugin/filter'
+
+module Fluent::Plugin
+  class DockerMetadataFilter < Fluent::Plugin::Filter
     Fluent::Plugin.register_filter('docker_metadata', self)
 
     config_param :docker_url, :string,  default: 'unix:///var/run/docker.sock'
@@ -44,7 +46,7 @@ module Fluent
         metadata = @cache.getset(container_id){DockerMetadataFilter.get_metadata(container_id)}
 
         if metadata
-          new_es = MultiEventStream.new
+          new_es = Fluent::MultiEventStream.new
 
           es.each {|time, record|
             record.merge!({

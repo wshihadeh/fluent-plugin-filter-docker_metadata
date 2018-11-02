@@ -18,7 +18,7 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.has_rdoc      = false
 
-  gem.add_runtime_dependency "fluentd", ">= 0.12"
+  gem.add_runtime_dependency "fluentd", ">= 0.14"
   gem.add_runtime_dependency "docker-api"
   gem.add_runtime_dependency "lru_redux"
 
